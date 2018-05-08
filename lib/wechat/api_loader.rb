@@ -8,10 +8,11 @@ module Wechat
       js_token_file = options[:js_token_file] || c.jsapi_ticket.presence || '/var/tmp/wechat_jsapi_ticket'
       type = options[:type] || c.type
       if c.appid && c.secret && token_file.present?
-        wx_class = (type == 'mp') ? Wechat::MpApi : Wechat::Api
+        wx_class = type == 'mp' ? Wechat::MpApi : Wechat::Api
         wx_class.new(c.appid, c.secret, token_file, c.timeout, c.skip_verify_ssl, js_token_file)
       elsif c.corpid && c.corpsecret && token_file.present?
-        Wechat::CorpApi.new(c.corpid, c.corpsecret, token_file, c.agentid, c.timeout, c.skip_verify_ssl, js_token_file)
+        wx_class = type == 'work' ? Wechat::WorkApi : Wechat::CorpApi
+        wx_class.new(c.corpid, c.corpsecret, token_file, c.agentid, c.timeout, c.skip_verify_ssl, js_token_file)
       else
         raise "Need create ~/.wechat.yml with wechat appid and secret or running at rails root folder so wechat can read config/wechat.yml"
       end
