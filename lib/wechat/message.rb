@@ -22,6 +22,10 @@ module Wechat
           new(filter: { is_to_all: true }, send_ignore_reprint: send_ignore_reprint)
         end
       end
+
+      def to_chat(chatid)
+        new(ChatId: chatid)
+      end
     end
 
     class ArticleBuilder
@@ -98,6 +102,10 @@ module Wechat
 
     def agent_id(agentid)
       update(AgentId: agentid)
+    end
+
+    def chat_id(chatid)
+      update(ChatId: chatid)
     end
 
     def text(content)
@@ -199,7 +207,7 @@ module Wechat
     }.freeze
 
     TO_JSON_ALLOWED = %w[touser msgtype content image voice video file
-                         music news articles template agentid filter
+                         music news articles template agentid chatid filter
                          send_ignore_reprint mpnews towxname].freeze
 
     def to_json

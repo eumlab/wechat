@@ -30,7 +30,6 @@ RSpec.describe Wechat::Message do
   end
 
   describe 'to' do
-    let(:message) { Wechat::Message.from_hash(text_request) }
     specify 'will create base message' do
       reply = Wechat::Message.to('toUser')
       expect(reply).to be_a(Wechat::Message)
@@ -40,12 +39,19 @@ RSpec.describe Wechat::Message do
   end
 
   describe 'to_mass' do
-    let(:message) { Wechat::Message.from_hash(text_request) }
     specify 'will create base message' do
       reply = Wechat::Message.to_mass
       expect(reply).to be_a(Wechat::Message)
       expect(reply.message_hash).to include(filter: { is_to_all: true })
       expect(reply.message_hash[:send_ignore_reprint]).to eq 0
+    end
+  end
+
+  describe 'to_chat' do
+    specify 'will create base message' do
+      reply = Wechat::Message.to_chat('chatid')
+      expect(reply).to be_a(Wechat::Message)
+      expect(reply.message_hash).to include(ChatId: 'chatid')
     end
   end
 
