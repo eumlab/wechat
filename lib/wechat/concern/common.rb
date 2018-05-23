@@ -136,6 +136,10 @@ module Wechat
         get 'material/get', params: { media_id: media_id }, as: :file
       end
 
+      def material_get(media_id)
+        get 'material/get_material', params: { media_id: media_id }
+      end
+
       def material_count
         get 'material/get_materialcount'
       end
@@ -146,6 +150,10 @@ module Wechat
 
       def material_add(type, file)
         post_file 'material/add_material', file, params: { type: type }
+      end
+
+      def material_video_add(type, file, description)
+        post_file_with_description 'material/add_material', file, description, params: { type: type }
       end
 
       def material_delete(media_id)

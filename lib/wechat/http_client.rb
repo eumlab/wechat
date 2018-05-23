@@ -38,6 +38,19 @@ module Wechat
       end
     end
 
+    def post_file_with_description(path, file, description, post_header = {})
+      request(path, post_header) do |url, header|
+        params = header.delete(:params)
+        form_file = file.is_a?(HTTP::FormData::File) ? file : HTTP::FormData::File.new(file)
+        httprb.headers(header)
+          .post(url, params: params,
+                     form: { media: form_file,
+                             description: description.to_json,
+                             hack: 'X' }, # Existing here for http-form_data 1.0.1 handle single param improperly
+                     ssl_context: ssl_context)
+      end
+    end
+
     private
 
     def request(path, header = {}, &_block)

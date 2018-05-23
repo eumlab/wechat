@@ -52,6 +52,12 @@ module Wechat
       end
     end
 
+    def post_file_with_description(path, file, description, headers = {})
+      with_access_token(headers[:params]) do |params|
+        client.post_file_with_description path, file, description, headers.merge(params: params)
+      end
+    end
+
     def with_access_token(params = {}, tries = 2)
       params ||= {}
       yield(params.merge(access_token: access_token.token))
