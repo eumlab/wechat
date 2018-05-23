@@ -98,14 +98,6 @@ module Wechat
         post 'message/mass/get', JSON.generate(msg_id: msg_id)
       end
 
-      def wxa_get_wxacode(path, width = 430)
-        post 'getwxacode', JSON.generate(path: path, width: width), base: WXA_BASE
-      end
-
-      def wxa_create_qrcode(path, width = 430)
-        post 'wxaapp/createwxaqrcode', JSON.generate(path: path, width: width)
-      end
-
       def menu
         get 'menu/get'
       end
@@ -136,6 +128,10 @@ module Wechat
         get 'material/get', params: { media_id: media_id }, as: :file
       end
 
+      def material_get(media_id)
+        get 'material/get_material', params: { media_id: media_id }
+      end
+
       def material_count
         get 'material/get_materialcount'
       end
@@ -146,6 +142,10 @@ module Wechat
 
       def material_add(type, file)
         post_file 'material/add_material', file, params: { type: type }
+      end
+
+      def material_video_add(type, file, description)
+        post_file_with_description 'material/add_material', file, description, params: { type: type }
       end
 
       def material_delete(media_id)
