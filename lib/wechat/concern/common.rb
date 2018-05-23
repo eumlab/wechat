@@ -98,14 +98,6 @@ module Wechat
         post 'message/mass/get', JSON.generate(msg_id: msg_id)
       end
 
-      def wxa_get_wxacode(path, width = 430)
-        post 'getwxacode', JSON.generate(path: path, width: width), base: WXA_BASE
-      end
-
-      def wxa_create_qrcode(path, width = 430)
-        post 'wxaapp/createwxaqrcode', JSON.generate(path: path, width: width)
-      end
-
       def menu
         get 'menu/get'
       end

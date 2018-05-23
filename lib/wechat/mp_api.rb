@@ -32,6 +32,20 @@ module Wechat
       post 'template/del', JSON.generate(template_id: template_id)
     end
 
+    def wxa_get_wxacode(path, width = 430)
+      post 'getwxacode', JSON.generate(path: path, width: width), base: WXA_BASE
+    end
+
+    def wxa_get_wxacode_unlimit(scene, page, width = 430)
+      post 'getwxacodeunlimit',
+           JSON.generate(scene: scene, page: page, width: width),
+           base: WXA_BASE
+    end
+
+    def wxa_create_qrcode(path, width = 430)
+      post 'wxaapp/createwxaqrcode', JSON.generate(path: path, width: width)
+    end
+
     def login(code)
       params = {
         appid: access_token.appid,
