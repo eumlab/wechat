@@ -83,7 +83,7 @@ module Wechat
       end
 
       def message_mass_sendall(message)
-        post 'message/mass/sendall', message.to_json
+        post 'message/mass/sendall', JSON.generate(message)
       end
 
       def message_mass_delete(msg_id)
@@ -91,7 +91,7 @@ module Wechat
       end
 
       def message_mass_preview(message)
-        post 'message/mass/preview', message.to_json
+        post 'message/mass/preview', JSON.generate(message)
       end
 
       def message_mass_get(msg_id)
