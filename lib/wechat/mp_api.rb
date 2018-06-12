@@ -36,9 +36,9 @@ module Wechat
       post 'getwxacode', JSON.generate(path: path, width: width), base: WXA_BASE
     end
 
-    def wxa_get_wxacode_unlimit(scene, page, width = 430)
+    def wxa_get_wxacode_unlimit(scene: '', page: 'pages/index/index', width: 430, is_hyaline: false)
       post 'getwxacodeunlimit',
-           JSON.generate(scene: scene, page: page, width: width),
+           JSON.generate(scene: scene, page: page, width: width, is_hyaline: is_hyaline),
            base: WXA_BASE
     end
 
