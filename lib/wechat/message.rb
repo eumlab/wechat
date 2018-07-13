@@ -179,6 +179,13 @@ module Wechat
       update(MsgType: 'ref_mpnews', MpNews: { MediaId: media_id })
     end
 
+    def mini_program_card(miniprogram_hash)
+      mini_program_page_fields = camelize_hash_keys(
+        miniprogram_hash.slice(:title, :appid, :pagepath, :thumb_media_id)
+      )
+      update(MsgType: 'miniprogrampage', MiniProgramPage: mini_program_page_fields)
+    end
+
     TEMPLATE_KEYS = %i[template_id form_id page color
                        emphasis_keyword topcolor url miniprogram data].freeze
 
@@ -208,7 +215,7 @@ module Wechat
 
     TO_JSON_ALLOWED = %w[touser msgtype content image voice video file
                          music news articles template agentid chatid filter
-                         send_ignore_reprint mpnews towxname].freeze
+                         send_ignore_reprint mpnews towxname miniprogrampage].freeze
 
     def to_json
       keep_camel_case_key = message_hash[:MsgType] == 'template'
