@@ -181,7 +181,7 @@ module Wechat
 
     def mini_program_card(miniprogram_hash)
       mini_program_page_fields = camelize_hash_keys(
-        miniprogram_hash.slice(:title, :appid, :pagepath, :thumb_media_id)
+        miniprogram_hash.slice('title', 'appid', 'pagepath', 'thumb_media_id')
       )
       update(MsgType: 'miniprogrampage', MiniProgramPage: mini_program_page_fields)
     end
