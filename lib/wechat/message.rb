@@ -100,6 +100,10 @@ module Wechat
       update(ToUserName: openid_or_userid)
     end
 
+    def with(kf_account)
+      update(KfAccount: kf_account)
+    end
+
     def agent_id(agentid)
       update(AgentId: agentid)
     end
@@ -210,12 +214,14 @@ module Wechat
       'TemplateId'       => 'template_id',
       'FormId'           => 'form_id',
       'ContentSourceUrl' => 'content_source_url',
-      'ShowCoverPic'     => 'show_cover_pic'
+      'ShowCoverPic'     => 'show_cover_pic',
+      'KfAccount'        => 'kf_account'
     }.freeze
 
     TO_JSON_ALLOWED = %w[touser msgtype content image voice video file
                          music news articles template agentid chatid filter
-                         send_ignore_reprint mpnews towxname miniprogrampage].freeze
+                         send_ignore_reprint mpnews towxname miniprogrampage
+                         kf_account].freeze
 
     def to_json
       keep_camel_case_key = message_hash[:MsgType] == 'template'
@@ -238,6 +244,8 @@ module Wechat
       when 'template'
         json_hash = { 'touser' => json_hash['touser'] }.merge!(json_hash['template'])
       end
+      json_hash['kf_account'].present? &&
+        json_hash['customservice'] = { 'kf_account' => json_hash.delete('kf_account') }
       JSON.generate(json_hash)
     end
 
