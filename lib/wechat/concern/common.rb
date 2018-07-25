@@ -160,6 +160,10 @@ module Wechat
         get 'customservice/getonlinekflist'
       end
 
+      def customservice_getkflist
+        get 'customservice/getkflist'
+      end
+
       def tags
         get 'tags/get'
       end
